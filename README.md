@@ -1,0 +1,14 @@
+# Blitz
+This repository contains a webapp for getting TFS pull requests in a queue. This allows users to review open pull requests and click the link to go to TFS and work the pull request.
+
+This is for TFS 2015. This webapp is a little site that shows all of the open pull requests in a project. The approver can then follow a link into TFS and work the pull request.\
+The app uses .net core.
+
+Why did I make it?
+Our state's mail server went down and pull requests fell through the cracks. We also had some pull requests which dropped off the radar before they were completed. I just wanted a solution to see all of the pull requests across hundreds of repo.'s. So, I made one!
+
+How to make it work for your TFS system:
+1. Obviously grab the code!
+2. Then, change the BaseTFSAddress to your tfs address. For example, if your tfs is hosted at "https://www.ourtfs.com/tfs" then that is your base addess.
+3. Next, change the Project to be your project. So, if your project is "OurProject" then set that string.
+4. Finally, the app is ready to go. It will construct address calls from your constants, so make sure you created them just like I did. (ie., the app will get all your repos by constructing the string "https://www.ourtfs.com/tfs/OurProject/_apis/git/repositories?api=1.0")
