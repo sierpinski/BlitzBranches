@@ -5,6 +5,7 @@ This repository contains a webapp for getting TFS pull requests in a queue. This
 ##Details
 This is for TFS 2015. This webapp is a little site that shows all of the open pull requests in a project. The approver can then follow a link into TFS and work the pull request.
 The app uses .net core.
+The app also uses Windows authentication. If you would like to add the ability use a token, please branch this and make a pull request.
 
 ##Why did I make it?
 Our state's mail server went down and pull requests fell through the cracks. We also had some pull requests which dropped off the radar before they were completed. I just wanted a solution to see all of the pull requests across hundreds of repo.'s. So, I made one!
