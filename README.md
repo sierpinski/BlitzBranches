@@ -2,6 +2,8 @@
 ##What is it?
 This repository contains a webapp for getting TFS pull requests in a queue. This allows users to review open pull requests and click the link to go to TFS and work the pull request.
 
+[[https://github.com/sierpinski/Blitz/blob/master/kylesgithub.png]]
+
 ##Details
 This is for TFS 2015. This webapp is a little site that shows all of the open pull requests in a project. The approver can then follow a link into TFS and work the pull request.
 The app uses .net core.
