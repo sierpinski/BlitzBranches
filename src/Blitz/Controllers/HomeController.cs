@@ -15,8 +15,8 @@ namespace Blitz.Controllers
 {
     public class HomeController : Controller
     {
-        const string BaseTFSAddress = "https://change.me/tfs";
-        const string TfsProject = "projectNameChangeMe";
+        const string BaseTFSAddress = "https://www.ourtfs.com/tfs"; // Change me.
+        const string TfsProject = "OurProject";  // Change me.
         public async Task<IActionResult> Index()
         {
             return View();
