@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,19 +15,22 @@ namespace Blitz.Controllers
 {
     public class HomeController : Controller
     {
-        public string BaseUrl;
-        public string Project;
+        const string BaseTFSAddress = "https://change.me/tfs";
+        const string TfsProject = "projectNameChangeMe";
         public async Task<IActionResult> Index()
         {
-            const string BaseTFSAddress = "https://domain.com/tfs";
-            const string Project = "projectName";
+            return View();
+        }
+
+        public async Task<PartialViewResult> LoadPullRequestData(string param)
+        {
             try
             {
-                var authHandler = new HttpClientHandler {Credentials = CredentialCache.DefaultNetworkCredentials};
+                var authHandler = new HttpClientHandler { Credentials = CredentialCache.DefaultNetworkCredentials };
                 var httpClient = new HttpClient(authHandler);
                 httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.Add("Accept","application/json");
-                var response = await httpClient.GetStringAsync($"{BaseTFSAddress}/{Project}/_apis/git/repositories?api=1.0");
+                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
+                var response = await httpClient.GetStringAsync($"{BaseTFSAddress}/{TfsProject}/_apis/git/repositories?api=1.0");
                 var responseObject = JsonConvert.DeserializeObject<Response<IEnumerable<Repository>>>(response);
                 var repos = responseObject.value.ToList();
                 Debug.WriteLine($"Repos Total: {responseObject.count}");
@@ -40,7 +43,7 @@ namespace Blitz.Controllers
                         Debug.WriteLine($"Open Pull Requests: {count}");
                         var pullResponse =
                             httpClient.GetStringAsync(
-                                    $"{BaseTFSAddress}/{Project}/_apis/git/repositories/{repo.id}/pullrequests?api-version=1.0").Result;
+                                    $"{BaseTFSAddress}/{TfsProject}/_apis/git/repositories/{repo.id}/pullrequests?api-version=1.0").Result;
                         var pullResponseObject =
                             JsonConvert.DeserializeObject<Response<IEnumerable<PullRequest>>>(pullResponse);
                         if (pullResponseObject.count == 0) return;
@@ -51,13 +54,13 @@ namespace Blitz.Controllers
                             {
                                 var getPull =
                                     httpClient.GetStringAsync(
-                                            $"{BaseTFSAddress}/{Project}/_apis/git/repositories/{pull.repository.id}/pullrequests?api-version=1.0").Result;
+                                            $"{BaseTFSAddress}/{TfsProject}/_apis/git/repositories/{pull.repository.id}/pullrequests?api-version=1.0").Result;
                                 var pObj = JObject.Parse(getPull).SelectToken("value").ToString();
                                 var getPullObj = JsonConvert.DeserializeObject<PullRequest[]>(pObj);
                                 foreach (var p in getPullObj)
                                 {
                                     p.repository = repo;
-                                    p.remoteUrl = p.repository.remoteUrl + "/" +
+                                    p.remoteUrl = p.repository.remoteUrl.Replace("https://jcps.me","http://e275tfsat15") + "/" +
                                                   $"pullrequest/{p.pullRequestId}#view=discussion";
                                 }
                                 pullRequests.AddRange(getPullObj);
@@ -73,14 +76,14 @@ namespace Blitz.Controllers
                         Debug.WriteLine(exception.Message);
                     }
                 });
-                var viewModel = new Response<IEnumerable<PullRequest>> {count = count, value = pullRequests};
+                var viewModel = new Response<IEnumerable<PullRequest>> { count = count, value = pullRequests };
                 httpClient.Dispose();
-                return View(viewModel);
+                return PartialView(viewModel);
             }
             catch (Exception exception)
             {
                 var a = exception;
-                return View();
+                return PartialView();
             }
         }
 
@@ -88,27 +91,5 @@ namespace Blitz.Controllers
         {
             return View();
         }
-        public IEnumerable<TContent> DownloadContentFromUrls<TContent>(IEnumerable<string> urls)
-        {
-            var queue = new ConcurrentQueue<TContent>();
-
-            using (var client = new HttpClient())
-            {
-                Task.WaitAll(urls.Select(url =>
-                {
-                    return client.GetAsync(url).ContinueWith(response =>
-                    {
-                        var content = JsonConvert.DeserializeObject<IEnumerable<TContent>>(response.Result.Content.ReadAsStringAsync().Result);
-
-                        foreach (var c in content)
-                            queue.Enqueue(c);
-                    });
-                }).ToArray());
-            }
-
-            return queue;
-        }
-
     }
-
 }
