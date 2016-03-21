@@ -15,5 +15,5 @@ Our state's mail server went down and pull requests fell through the cracks. We 
 ##How to make it work for your TFS system:
 1. Obviously grab the code!
 2. Then, change the BaseTFSAddress to your tfs address. For example, if your tfs is hosted at "https://www.ourtfs.com/tfs" then that is your base addess.
-3. Next, change the Project to be your project. So, if your project is "OurProject" then set that string.
+3. Next, change the TfsProject to be your project. So, if your project is "OurProject" then set that string.
 4. Finally, the app is ready to go. It will construct address calls from your constants, so make sure you created them just like I did. (ie., the app will get all your repos by constructing the string "https://www.ourtfs.com/tfs/OurProject/_apis/git/repositories?api=1.0")
