@@ -60,7 +60,7 @@ namespace Blitz.Controllers
                                 foreach (var p in getPullObj)
                                 {
                                     p.repository = repo;
-                                    p.remoteUrl = p.repository.remoteUrl.Replace("https://jcps.me","http://e275tfsat15") + "/" +
+                                    p.remoteUrl = p.repository.remoteUrl + "/" +
                                                   $"pullrequest/{p.pullRequestId}#view=discussion";
                                 }
                                 pullRequests.AddRange(getPullObj);
