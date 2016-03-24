@@ -1,0 +1,93 @@
+﻿@using System.Threading.Tasks
+@using Blitz.Data
+@model Response<IEnumerable<PullRequest>>
+<div class="row">
+    There are @Model.count active pull requests. See details below:
+</div>
+<div class="row">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Repository Name
+                </th>
+                <th>
+                    Pull Request Title
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Merge Result
+                </th>
+                <th>
+                    Developer
+                </th>
+                <th>
+                    Link to TFS
+                </th>
+                <th>
+                    Reviewers
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pull in Model.value)
+            {
+                <tr>
+                    <td>
+                        @pull.repository.name
+                    </td>
+                    <td width="300">
+                        @pull.title
+                    </td>
+                    <td>
+                        @pull.status
+                    </td>
+                    @if (pull.mergeStatus == "succeeded")
+                    {
+                <td class="success">@pull.mergeStatus</td>}
+                    @if (pull.mergeStatus != "succeeded")
+                    {
+                <td class="danger">@pull.mergeStatus</td> }
+                    <td width="150">
+                        <div class="media">
+                            <div class="media-left">
+                                <a href="#">
+                                    <img class="media-object" src="@pull.createdBy.imageUrl" alt="User Photo" height="50" width="50">
+                                </a>
+                            </div>
+                            <div class="media-body">
+                                <h5 class="media-heading">
+                                    @pull.createdBy.displayName
+                                </h5>
+                            </div>
+                        </div>
+                    </td>
+                    <td width="200">
+                        <a href="@pull.remoteUrl">
+                            Click Here to Handle this Request.
+                        </a>
+                    </td>
+                    <td>
+                        @foreach (var rev in pull.reviewers)
+                        {
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                        <img class="media-object" src="@rev.imageUrl" alt="User Photo" height="50" width="50">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <h5 class="media-heading">
+                                        @rev.displayName
+                                    </h5>
+                                </div>
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
