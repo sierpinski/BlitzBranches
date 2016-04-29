@@ -1,0 +1,150 @@
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+    <script src="sdk/scripts/VSS.SDK.js"></script>
+</head>
+<body>
+     <div id="grid-container"></div>
+<script>
+	// Sets up the initial handshake with the host frame
+	 VSS.init({
+		 // Our extension will explicitly notify the host when we're done loading
+		 explicitNotifyLoaded: true,
+
+		 // We are using some Team Services APIs, so we will need the module loader to load them in
+		 usePlatformScripts: true,
+		 usePlatformStyles: true       
+	 });
+	 // Load Team Services controls
+	 // Load VSTS controls and REST client
+	 VSS.require(["VSS/Controls", "VSS/Controls/Grids","VSS/Controls/Dialogs",
+		 "VSS/Service", "TFS/VersionControl/GitRestClient"],
+		 function (Controls, Grids, Dialogs, VSS_Service, Git_Client) {
+
+		var gitClient = VSS_Service.getCollectionClient(Git_Client.GitHttpClient);
+		
+		var currentContext = VSS.getWebContext(); 
+		var projCurr = currentContext.project.name;
+		gitClient.getPullRequestsByProject(projCurr).then(function(pullRequests) 
+			{
+				Controls.create(Grids.Grid, $("#grid-container"), {
+				 height: "825px", // Explicit height is required for a Grid control
+				 width: "100%",
+				 columns: [
+					 { text: "ID", index: "pullRequestId", width: 30 },
+					 { text: "Title", index:"title", width: 300},
+					 { text: "Creation Date", index:"creationDate", width: 140},
+					 { text: "Request Status", width: 100, getCellContents: function (
+					  rowInfo, 
+					  dataIndex, 
+					  expandedState, 
+					  level, 
+					  column, 
+					  indentIndex, 
+					  columnOrder) {
+
+					  var test = this.getRowData(dataIndex).status;
+					
+					  var result = test == 1 ? "Active":"Not Active";
+					  return $("<div class='grid-cell'/>")
+						.width(column.width || 100)
+						.css("color", test != 1 ? "red" : "green")
+						.text(result);
+					 }},
+					 { text: "Merge Status", width: 100, getCellContents: function (
+					  rowInfo, 
+					  dataIndex, 
+					  expandedState, 
+					  level, 
+					  column, 
+					  indentIndex, 
+					  columnOrder) {
+
+					  var test = this.getRowData(dataIndex).mergeStatus;
+					
+					  var result = test != 3 ? "Failed":"Succeeded";
+					  return $("<div class='grid-cell'/>")
+						.width(column.width || 100)
+						.css("color", test != 3 ? "red" : "green")
+						.text(result);
+					 }},
+					 { text: "Creator", width: 150 , getCellContents: function (
+					  rowInfo, 
+					  dataIndex, 
+					  expandedState, 
+					  level, 
+					  column, 
+					  indentIndex, 
+					  columnOrder) {
+						return $("<div class='grid-cell' />")
+							.width(column.width || 150)
+							.append($("<div class=\"id-holder\" />"))
+							.append($("<a style=\"pointer-events: none; color: black; cursor: default;\"  class=\"idLink\" href=\"javascript:;\" data-displayname=\""+this.getRowData(dataIndex).createdBy.displayName+"\" data-uniquename=\""+this.getRowData(dataIndex).createdBy.uniqueName+"\"></a>")
+							.text(this.getRowData(dataIndex).createdBy.displayName))
+							.append($("<img width=\"27px\" height=\"27px\" style=\"float:left;\" src=\""+this.getRowData(dataIndex).createdBy.imageUrl+"\" alt=\""+this.getRowData(dataIndex).createdBy.displayName+"\"></img>"));
+					 }},
+					 { text: "Reviewer", width: 200 , getCellContents: function (
+					  rowInfo, 
+					  dataIndex, 
+					  expandedState, 
+					  level, 
+					  column, 
+					  indentIndex, 
+					  columnOrder) {
+					    var holder = $("<div class='grid-cell' />")
+							.width(column.width || 200);
+						this.getRowData(dataIndex).reviewers.forEach(function(reviewer){
+							holder
+							.append($("<div class=\"id-holder\" />"))
+							.append($("<a style=\"pointer-events: none; color: black; cursor: default;\" class=\"idLink\" href=\"javascript:;\" data-displayname=\""+reviewer.displayName+"\" data-uniquename=\""+reviewer.uniqueName+"\"></a>")
+							.text(reviewer.displayName))
+							.append($("<img width=\"27px\" height=\"27px\" style=\"float:left;\" src=\""+reviewer.imageUrl+"\" alt=\""+reviewer.displayName+"\"></img>"));
+						});
+						return holder;
+					 }},
+					 { text: "Handle Request", width: 100, getCellContents: function (
+					  rowInfo, 
+					  dataIndex, 
+					  expandedState, 
+					  level, 
+					  column, 
+					  indentIndex, 
+					  columnOrder) {
+					    var thePullReq = this.getRowData(dataIndex).url;
+						var modified = thePullReq.replace("_apis\/git\/repositories",projCurr+"\/_git");
+						var modified2 = modified.replace("pullRequests","pullRequest");
+						return $("<div class='grid-cell' />")
+							.width(column.width || 100)
+							.append($("<a id=\"refLink\" href=\""+modified2+"\"></a>")
+							.attr("target","_blank")
+							.text("Go To Request"));
+					 }},
+				 ],
+				 // This data source is rendered into the Grid columns defined above
+				 source: pullRequests
+				});
+			}).catch(console.log.bind(console));
+
+			VSS.notifyLoadSucceeded();
+		 });
+</script>
+<style>
+	.grid-cell{
+		height:auto;
+	}
+	
+	.grid-row{
+		height: auto !important;
+		position:static;
+	}
+	
+	.id-holder{
+		clear:both;
+		padding:2px;
+	}
+	img{
+		padding-right:2px;
+	}
+</style>
+</body>
+</html>
