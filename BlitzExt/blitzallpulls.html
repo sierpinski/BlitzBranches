@@ -1,10 +1,53 @@
 <html>
 <head>
 	<script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="sdk/scripts/VSS.SDK.js"></script>
 </head>
 <body>
-     <div id="grid-container"></div>
+	
+	<div class="row">
+		<h5 class="col-md-3" align="center">Pull Request Count: <span id="PullRequestCountSpan"></span></h5><h3 class="col-md-6" align="center">Active Pull Requests</h3><h5 class="col-md-3" align="center">Project: <span id="ProjectNameSpan"></span></h5>
+	</div>
+	<div class="table-responsive" id="pullRequestTableContainer">
+		<table class="table table-hover table-striped table-condensed" id="pullRequestTable">
+			<thead>
+				<tr>
+					<th>
+						ID
+					</th>
+					<th>
+						By
+					</th>
+					<th>
+						Title
+					</th>
+					<th>
+						Creation Date
+					</th>
+					<th>
+						Request Status
+					</th>
+					<th>
+						Merge Status
+					</th>
+					<th>
+						Reviewer(s)
+					</th>
+					<th>
+						Handle Request
+					</th>
+				</tr>
+			</thead>
+			<tbody id="pullRequestTableBody">
+			</tbody>
+		</table>
+	</div>
 <script>
 	// Sets up the initial handshake with the host frame
 	 VSS.init({
@@ -25,103 +68,40 @@
 		
 		var currentContext = VSS.getWebContext(); 
 		var projCurr = currentContext.project.name;
+		
+		$("#ProjectNameSpan").html(projCurr);
+		
 		gitClient.getPullRequestsByProject(projCurr).then(function(pullRequests) 
 			{
-				Controls.create(Grids.Grid, $("#grid-container"), {
-				 height: "825px", // Explicit height is required for a Grid control
-				 width: "100%",
-				 columns: [
-					 { text: "ID", index: "pullRequestId", width: 30 },
-					 { text: "Title", index:"title", width: 300},
-					 { text: "Creation Date", index:"creationDate", width: 140},
-					 { text: "Request Status", width: 100, getCellContents: function (
-					  rowInfo, 
-					  dataIndex, 
-					  expandedState, 
-					  level, 
-					  column, 
-					  indentIndex, 
-					  columnOrder) {
-
-					  var test = this.getRowData(dataIndex).status;
-					
-					  var result = test == 1 ? "Active":"Not Active";
-					  return $("<div class='grid-cell'/>")
-						.width(column.width || 100)
-						.css("color", test != 1 ? "red" : "green")
-						.text(result);
-					 }},
-					 { text: "Merge Status", width: 100, getCellContents: function (
-					  rowInfo, 
-					  dataIndex, 
-					  expandedState, 
-					  level, 
-					  column, 
-					  indentIndex, 
-					  columnOrder) {
-
-					  var test = this.getRowData(dataIndex).mergeStatus;
-					
-					  var result = test != 3 ? "Failed":"Succeeded";
-					  return $("<div class='grid-cell'/>")
-						.width(column.width || 100)
-						.css("color", test != 3 ? "red" : "green")
-						.text(result);
-					 }},
-					 { text: "Creator", width: 150 , getCellContents: function (
-					  rowInfo, 
-					  dataIndex, 
-					  expandedState, 
-					  level, 
-					  column, 
-					  indentIndex, 
-					  columnOrder) {
-						return $("<div class='grid-cell' />")
-							.width(column.width || 150)
-							.append($("<div class=\"id-holder\" />"))
-							.append($("<a style=\"pointer-events: none; color: black; cursor: default;\"  class=\"idLink\" href=\"javascript:;\" data-displayname=\""+this.getRowData(dataIndex).createdBy.displayName+"\" data-uniquename=\""+this.getRowData(dataIndex).createdBy.uniqueName+"\"></a>")
-							.text(this.getRowData(dataIndex).createdBy.displayName))
-							.append($("<img width=\"27px\" height=\"27px\" style=\"float:left;\" src=\""+this.getRowData(dataIndex).createdBy.imageUrl+"\" alt=\""+this.getRowData(dataIndex).createdBy.displayName+"\"></img>"));
-					 }},
-					 { text: "Reviewer", width: 200 , getCellContents: function (
-					  rowInfo, 
-					  dataIndex, 
-					  expandedState, 
-					  level, 
-					  column, 
-					  indentIndex, 
-					  columnOrder) {
-					    var holder = $("<div class='grid-cell' />")
-							.width(column.width || 200);
-						this.getRowData(dataIndex).reviewers.forEach(function(reviewer){
-							holder
-							.append($("<div class=\"id-holder\" />"))
-							.append($("<a style=\"pointer-events: none; color: black; cursor: default;\" class=\"idLink\" href=\"javascript:;\" data-displayname=\""+reviewer.displayName+"\" data-uniquename=\""+reviewer.uniqueName+"\"></a>")
-							.text(reviewer.displayName))
-							.append($("<img width=\"27px\" height=\"27px\" style=\"float:left;\" src=\""+reviewer.imageUrl+"\" alt=\""+reviewer.displayName+"\"></img>"));
-						});
-						return holder;
-					 }},
-					 { text: "Handle Request", width: 100, getCellContents: function (
-					  rowInfo, 
-					  dataIndex, 
-					  expandedState, 
-					  level, 
-					  column, 
-					  indentIndex, 
-					  columnOrder) {
-					    var thePullReq = this.getRowData(dataIndex).url;
-						var modified = thePullReq.replace("_apis\/git\/repositories",projCurr+"\/_git");
-						var modified2 = modified.replace("pullRequests","pullRequest");
-						return $("<div class='grid-cell' />")
-							.width(column.width || 100)
-							.append($("<a id=\"refLink\" href=\""+modified2+"\"></a>")
-							.attr("target","_blank")
-							.text("Go To Request"));
-					 }},
-				 ],
-				 // This data source is rendered into the Grid columns defined above
-				 source: pullRequests
+				$("#PullRequestCountSpan").html(pullRequests.length);
+				jQuery.each(pullRequests,function(index, pullRequest){
+					var id = pullRequest.pullRequestId;
+					$("#pullRequestTableBody").append("<tr id=\""+id+"\"></tr>");
+					$("#"+id+"").append("<td>"+id+"</td>");
+					var creatorElem = $("<td></td>").append($("<img class=\"img-responsive\" width=\"27px\" height=\"27px\" src=\""+pullRequest.createdBy.imageUrl+"\" title=\""+pullRequest.createdBy.displayName+"\" alt=\""+pullRequest.createdBy.displayName+"\"></img>"));
+					$("#"+id+"").append(creatorElem);
+					$("#"+id+"").append("<td>"+pullRequest.title+"</td>");
+					var dStr = pullRequest.creationDate.toString();
+					var cDate = dStr.substring(0, 24);
+					$("#"+id+"").append("<td>"+cDate+"</td>");
+					var testRequestStatus = pullRequest.status;
+				    var resultReqTest = testRequestStatus == 1 ? "Active":"Not Active";
+					var reqElem = $("<td>"+resultReqTest+"</td>").css("color", testRequestStatus != 1 ? "red" : "green");
+					$("#"+id+"").append(reqElem);
+				    var testMerge = pullRequest.mergeStatus;
+				    var resultMerge = testMerge != 3 ? "Failed":"Succeeded";
+					var mergeElem = $("<td>"+resultMerge+"</td>").css("color", testRequestStatus != 1 ? "red" : "green");
+					$("#"+id+"").append(mergeElem);
+					var holder = $("<td></td>");
+					jQuery.each(pullRequest.reviewers,function(index, reviewer){
+						holder.append($("<img class=\"img-responsive\" width=\"27px\" height=\"27px\" src=\""+reviewer.imageUrl+"\" title=\""+reviewer.displayName+"\" alt=\""+reviewer.displayName+"\"></img>"));
+					});
+					$("#"+id+"").append(holder);
+					var thePullReq = pullRequest.url;
+					var modified = thePullReq.replace("_apis\/git\/repositories",projCurr+"\/_git");
+					var modified2 = modified.replace("pullRequests","pullRequest");
+					var pullWorkElem = $("<td></td>").append($("<a target=\"_blank\" class=\"btn btn-default\" role=\"button\" id=\"refLink\" href=\""+modified2+"\"><span class=\"glyphicon glyphicon-arrow-right\" aria-hidden=\"true\"></span></a>"));
+					$("#"+id+"").append(pullWorkElem);
 				});
 			}).catch(console.log.bind(console));
 
@@ -129,21 +109,22 @@
 		 });
 </script>
 <style>
-	.grid-cell{
-		height:auto;
-	}
-	
-	.grid-row{
-		height: auto !important;
-		position:static;
-	}
-	
 	.id-holder{
 		clear:both;
 		padding:2px;
 	}
 	img{
 		padding-right:2px;
+		float:left;
+	}
+	
+	h5, h3{
+		margin: 0;
+	}
+	
+	#pullRequestTableContainer{
+		height: 700px !important;
+		overflow: scroll;
 	}
 </style>
 </body>

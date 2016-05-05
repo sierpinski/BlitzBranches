@@ -1,7 +1,7 @@
 {
 	 "manifestVersion": 1,
 	 "id": "blitz-allpulls-extension",
-	 "version": "0.2.2",
+	 "version": "0.3.5",
 	 "name": "Sierpinski's Blitz Active Pull Requests",
 	 "description": "An extension that shows all active pull requests.",
 	 "publisher": "sierpinski",
@@ -29,7 +29,7 @@
     },
 	"screenshots": [
 		{
-            "path": "images/ScreenCaptureExt.png"
+            "path": "images/ScreenCaptureExtv03.png"
         },
         {
             "path": "images/ScreenCapNav.png"
