@@ -85,12 +85,12 @@
 					var cDate = dStr.substring(0, 24);
 					$("#"+id+"").append("<td>"+cDate+"</td>");
 					var testRequestStatus = pullRequest.status;
-				    var resultReqTest = testRequestStatus == 1 ? "Active":"Not Active";
-					var reqElem = $("<td>"+resultReqTest+"</td>").css("color", testRequestStatus != 1 ? "red" : "green");
+				    var resultReqTest = testRequestStatus === 1 ? "Active" : "Not Active";
+					var reqElem = $("<td>"+resultReqTest+"</td>").css("color", testRequestStatus === 1 ? "green" : "red");
 					$("#"+id+"").append(reqElem);
 				    var testMerge = pullRequest.mergeStatus;
-				    var resultMerge = testMerge != 3 ? "Failed":"Succeeded";
-					var mergeElem = $("<td>"+resultMerge+"</td>").css("color", testRequestStatus != 1 ? "red" : "green");
+				    var resultMerge = testMerge === 3 ? "Succeeded" : "Failed";
+					var mergeElem = $("<td>"+resultMerge+"</td>").css("color", testRequestStatus === 3 ? "green" : "red");
 					$("#"+id+"").append(mergeElem);
 					var holder = $("<td></td>");
 					jQuery.each(pullRequest.reviewers,function(index, reviewer){
