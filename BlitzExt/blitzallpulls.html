@@ -90,11 +90,31 @@
 					$("#"+id+"").append("<td>"+cDate+"</td>");
 				    var testMerge = pullRequest.mergeStatus;
 				    var resultMerge = testMerge === 3 ? "Succeeded" : "Failed";
+				    var resultMerge2 = testMerge === 3 ? "success" : "danger";
 				    var mergeElem = $("<td>" + resultMerge + "</td>").css("color", testMerge === 3 ? "green" : "red");
-					$("#"+id+"").append(mergeElem);
+				    $("#" + id + "").append(mergeElem);
+				    $("#" + id + "").addClass(resultMerge2);
 					var holder = $("<td></td>");
-					jQuery.each(pullRequest.reviewers,function(index, reviewer){
-						holder.append($("<img class=\"img-responsive\" width=\"27px\" height=\"27px\" src=\""+reviewer.imageUrl+"\" title=\""+reviewer.displayName+"\" alt=\""+reviewer.displayName+"\"></img>"));
+				    jQuery.each(pullRequest.reviewers, function (index, reviewer) {
+				        var vote = "";
+				        var infoBubble = "No response.";
+				        if (reviewer.vote === -5) {
+				            vote = " waitingauthor";
+				            infoBubble = reviewer.displayName + " recommends waiting for the author of the code.";
+				        }
+				        if (reviewer.vote === 5) {
+				            vote = " approvedwithsuggestions";
+				            infoBubble = reviewer.displayName + " approved the pull request with suggestions.";
+				        }
+				        if (reviewer.vote === 10) {
+				            vote = " approved";
+				            infoBubble = reviewer.displayName + " approved the pull request.";
+				        }
+				        if (reviewer.vote === -10) {
+				            vote = " rejected";
+				            infoBubble = reviewer.displayName + " rejected the pull request.";
+				        }
+					    holder.append($("<img data-toggle=\"tooltip\" title=\""+infoBubble+"\" class=\"img-responsive"+vote+"\" width=\"27px\" height=\"27px\" src=\""+reviewer.imageUrl+"\" alt=\""+reviewer.displayName+"\"></img>"));
 					});
 					$("#"+id+"").append(holder);
 					var thePullReq = pullRequest.url;
@@ -104,6 +124,8 @@
 					$("#"+id+"").append(pullWorkElem);
 				});
 			}).catch(console.log.bind(console));
+
+		    $('[data-toggle="tooltip"]').tooltip();
 
 			VSS.notifyLoadSucceeded();
 		 });
@@ -126,6 +148,27 @@
 		height: 100%;
 		overflow: scroll;
 	}
+
+    .approved {
+        border:5px;
+        border-bottom-style: solid;
+        border-color:#287729;
+    }
+    .approvedwithsuggestions {
+        border:5px;
+        border-bottom-style: dotted;
+        border-color:#287729;
+    }
+    .rejected {
+        border:5px;
+        border-bottom-style: solid;
+        border-color:lightcoral;
+    }
+    .waitingauthor {
+        border:5px;
+        border-bottom-style: dotted;
+        border-color:#FF8C0C;
+    }
 </style>
 </body>
 </html>
