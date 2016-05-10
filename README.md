@@ -1,6 +1,6 @@
 # Blitz
 ##!Important Note!
-Due to the tight integration of this app with VSTS, I converted it into a VSTS extension that does the same work but with less hassle. You can check out the source for it in the BlitzExt folder. To install the extension from the marketplace, please go here: [Blitz Active Pull Request Extension](https://marketplace.visualstudio.com/items?itemName=sierpinski.blitz-allpulls-extension)
+Due to the tight integration of this app with VSTS, I converted it into a VSTS extension that does the same work but with less hassle. You can check out the source for it in the home folder. To install the extension from the marketplace, please go here: [Blitz Active Pull Request Extension](https://marketplace.visualstudio.com/items?itemName=sierpinski.blitz-allpulls-extension)
 
 ##What is it?
 This repository contains a webapp for getting TFS pull requests in a queue. This allows users to review open pull requests and click the link to go to TFS and work the pull request.
