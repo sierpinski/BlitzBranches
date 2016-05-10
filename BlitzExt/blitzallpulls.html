@@ -24,14 +24,14 @@
 					<th>
 						By
 					</th>
+                    <th>
+                        Repository
+                    </th>
 					<th>
 						Title
 					</th>
 					<th>
 						Creation Date
-					</th>
-					<th>
-						Request Status
 					</th>
 					<th>
 						Merge Status
@@ -79,18 +79,18 @@
 					$("#pullRequestTableBody").append("<tr id=\""+id+"\"></tr>");
 					$("#"+id+"").append("<td>"+id+"</td>");
 					var creatorElem = $("<td></td>").append($("<img class=\"img-responsive\" width=\"27px\" height=\"27px\" src=\""+pullRequest.createdBy.imageUrl+"\" title=\""+pullRequest.createdBy.displayName+"\" alt=\""+pullRequest.createdBy.displayName+"\"></img>"));
-					$("#"+id+"").append(creatorElem);
-					$("#"+id+"").append("<td>"+pullRequest.title+"</td>");
+					$("#" + id + "").append(creatorElem);
+					var repoName;
+					gitClient.getRepository(pullRequest.repository.id).then(function (repo) {
+					    $("#" + id + "").find("[data-repid='" + pullRequest.repository.id + "']").before("<td>" + repo.name + "</td>");
+					});
+					$("#"+id+"").append("<td data-repid=\""+pullRequest.repository.id+"\">"+pullRequest.title+"</td>");
 					var dStr = pullRequest.creationDate.toString();
 					var cDate = dStr.substring(0, 24);
 					$("#"+id+"").append("<td>"+cDate+"</td>");
-					var testRequestStatus = pullRequest.status;
-				    var resultReqTest = testRequestStatus === 1 ? "Active" : "Not Active";
-					var reqElem = $("<td>"+resultReqTest+"</td>").css("color", testRequestStatus === 1 ? "green" : "red");
-					$("#"+id+"").append(reqElem);
 				    var testMerge = pullRequest.mergeStatus;
 				    var resultMerge = testMerge === 3 ? "Succeeded" : "Failed";
-					var mergeElem = $("<td>"+resultMerge+"</td>").css("color", testRequestStatus === 3 ? "green" : "red");
+				    var mergeElem = $("<td>" + resultMerge + "</td>").css("color", testMerge === 3 ? "green" : "red");
 					$("#"+id+"").append(mergeElem);
 					var holder = $("<td></td>");
 					jQuery.each(pullRequest.reviewers,function(index, reviewer){

@@ -8,16 +8,18 @@ Go here:
 ![Screenshot of Finding The Extension](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allpulls-extension/0.3.5/assetbyname/Microsoft.VisualStudio.Services.Screenshots.2 "Finding the Extension")
 
 ##Screenshot
-Here is a big list of pull requests I just submitted:
+Here is an example list of pull requests (not showing repo. name which is now included):
 
 ![Screenshot of Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allpulls-extension/0.3.5/assetbyname/Microsoft.VisualStudio.Services.Screenshots.1 "Screenshot/Active Pull Requests")
+
+##Feature Ideas
+New features: Repository name listed, cleaner UI, with faster loading process.
 
 ##Why did I make it?
 Our state's mail server went down and pull requests fell through the cracks. We also had some pull requests which dropped off the radar before they were completed. I just wanted a solution to see all of the pull requests across hundreds of repo.'s. So, I made one!
 
 ##Source/Known Issues
 I've added the source to [my GitHub repository](https://github.com/sierpinski/Blitz). Please open issues with the extension there so I can track them more easily.
-[Compatibility issue with Firefox.](https://github.com/sierpinski/Blitz/issues/2)
 
 ##Feature Ideas
 Handling clicks on user links. Managing more than active requests. Handling less binary/diverse types of pull request statuses and merge statuses.
