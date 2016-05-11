@@ -5,12 +5,12 @@ This extension puts all pull requests across all repositories into a queue. This
 ##Details
 This is for VSTS (VSO, TFS 2015). This extension shows all of the open pull requests in a project. The approver can then follow a link to work the pull request.
 Go here:
-![Screenshot of Finding The Extension](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allpulls-extension/0.3.5/assetbyname/Microsoft.VisualStudio.Services.Screenshots.2 "Finding the Extension")
+![Screenshot of Finding The Extension](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allpulls-extension/0.5.0/assetbyname/Microsoft.VisualStudio.Services.Screenshots.2 "Finding the Extension")
 
 ##Screenshot
 Here is an example list of pull requests (not showing repo. name which is now included):
 
-![Screenshot of Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allpulls-extension/0.3.5/assetbyname/Microsoft.VisualStudio.Services.Screenshots.1 "Screenshot/Active Pull Requests")
+![Screenshot of Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allpulls-extension/0.5.0/assetbyname/Microsoft.VisualStudio.Services.Screenshots.1 "Screenshot/Active Pull Requests")
 
 ##Feature Ideas
 New features: Repository name listed, cleaner UI, with faster loading process.
