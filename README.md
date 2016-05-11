@@ -25,8 +25,4 @@ Our state's mail server went down and pull requests fell through the cracks. We 
 I've added the source to [my GitHub repository](https://github.com/sierpinski/Blitz). Please open issues with the extension there so I can track them more easily.
 
 ##Feature Ideas
-<<<<<<< HEAD
 Dive into code policies and more detailed statuses for each pull request.
-=======
-Handling clicks on user links. Managing more than active requests. Handling less binary/diverse types of pull request statuses and merge statuses.
->>>>>>> 5228a289c4ad791d839e977357e06f30e27b7b7c
