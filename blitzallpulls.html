@@ -14,6 +14,13 @@
 	<div class="row">
 		<h5 class="col-md-3" align="center">Pull Request Count: <span id="PullRequestCountSpan"></span></h5><h3 class="col-md-6" align="center">Active Pull Requests</h3><h5 class="col-md-3" align="center">Project: <span id="ProjectNameSpan"></span></h5>
 	</div>
+	<div class="row" name="filters">
+		  <form role="form">
+			<div class="checkbox">
+			  <label><input type="checkbox" value="" id="limitReviewerMe"> Show Only Pull Requests Where I am a Reviewer.</label>
+			</div>
+		  </form>
+	</div>
 	<div class="table-responsive" id="pullRequestTableContainer">
 		<table class="table table-hover table-striped table-condensed" id="pullRequestTable">
 			<thead>
@@ -68,6 +75,7 @@
 		
 		var currentContext = VSS.getWebContext(); 
 		var projCurr = currentContext.project.name;
+		var currUserId = currentContext.user.id;
 		
 		$("#ProjectNameSpan").html(projCurr);
 		
@@ -76,7 +84,7 @@
 				$("#PullRequestCountSpan").html(pullRequests.length);
 				jQuery.each(pullRequests,function(index, pullRequest){
 					var id = pullRequest.pullRequestId;
-					$("#pullRequestTableBody").append("<tr id=\""+id+"\"></tr>");
+					$("#pullRequestTableBody").append("<tr class=\"noMatchUser\" id=\""+id+"\"></tr>");
 					$("#"+id+"").append("<td>"+id+"</td>");
 					var creatorElem = $("<td></td>").append($("<img class=\"img-responsive\" width=\"27px\" height=\"27px\" src=\""+pullRequest.createdBy.imageUrl+"\" title=\""+pullRequest.createdBy.displayName+"\" alt=\""+pullRequest.createdBy.displayName+"\"></img>"));
 					$("#" + id + "").append(creatorElem);
@@ -96,6 +104,8 @@
 				    $("#" + id + "").addClass(resultMerge2);
 					var holder = $("<td></td>");
 				    jQuery.each(pullRequest.reviewers, function (index, reviewer) {
+						var reviewerId = reviewer.id;
+						if (currUserId === reviewerId) $("#" + id + "").removeClass("noMatchUser");
 				        var vote = "";
 				        var infoBubble = "No response.";
 				        if (reviewer.vote === -5) {
@@ -129,6 +139,11 @@
 
 			VSS.notifyLoadSucceeded();
 		 });
+	$(document).ready(function() {
+		$('#limitReviewerMe').change(function(){
+			$('.noMatchUser').toggle(!(this.checked));
+		});
+	});
 </script>
 <style>
 	.id-holder{
@@ -169,6 +184,11 @@
         border-bottom-style: dotted;
         border-color:#FF8C0C;
     }
+	#limitReviewerMe{
+		position: relative !important;
+		padding-left: 0px !important;
+		margin-left: 0px !important;
+	}
 </style>
 </body>
 </html>

@@ -14,6 +14,7 @@ Here is an example list of pull requests:
 
 ##Features In Latest Update
 New features:
+* Filter to only pull requests to which you have been assigned as a reviewer.
 * Hover over Reviewer for more information on their vote.
 * Rows now styled to show whether the pull request merged successfully with master.
 * Repository name added.
