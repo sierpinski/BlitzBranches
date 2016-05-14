@@ -1,6 +1,6 @@
 # Blitz
 ##What is it?
-This extension puts all pull requests across all repositories into a queue. This allows users to review open pull requests and click the link to go to work the pull request.
+This extension puts all pull requests across all repositories into a queue. This allows users to review open pull requests and click the link to go to work the pull request. [Check it out on the VSTS marketplace!](https://marketplace.visualstudio.com/items?itemName=sierpinski.blitz-allpulls-extension)
 
 ##Details
 This is for VSTS (VSO, TFS 2015). This extension shows all of the open pull requests in a project. The approver can then follow a link to work the pull request.

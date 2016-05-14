@@ -1,0 +1,57 @@
+<html>
+<head>
+	<script src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="sdk/scripts/VSS.SDK.js"></script>
+</head>
+<body>
+<div class="widget clickable">
+	<a href="#" target="_blank">
+    <h2 class="title">Active</h2>
+    <div class="big-count"></div>
+    <div>Pull Requests</div>
+	</a>
+</div>
+<script>
+	// Sets up the initial handshake with the host frame
+	 VSS.init({
+		 // Our extension will explicitly notify the host when we're done loading
+		 explicitNotifyLoaded: true,
+
+		 // We are using some Team Services APIs, so we will need the module loader to load them in
+		 usePlatformScripts: true,
+		 usePlatformStyles: true       
+	 });
+	 // Load Team Services controls
+	 // Load VSTS controls and REST client
+	 VSS.require(["VSS/Controls", "VSS/Controls/Grids","VSS/Controls/Dialogs",
+		 "VSS/Service", "TFS/VersionControl/GitRestClient", "TFS/Dashboards/WidgetHelpers"],
+		 function (Controls, Grids, Dialogs, VSS_Service, Git_Client, WidgetHelpers) {
+			var gitClient = VSS_Service.getCollectionClient(Git_Client.GitHttpClient);
+			var currentContext = VSS.getWebContext(); 
+			var projCurr = currentContext.project.name;
+			var uri = currentContext.host.uri + "//" + projCurr + "//_apps//hub//sierpinski.blitz-allpulls-extension.BlitzActivePulls";
+			
+            WidgetHelpers.IncludeWidgetStyles();
+			VSS.register("BlitzActivePullsWidget", function () {                
+                return {
+                    load: function (widgetSettings) {
+						gitClient.getPullRequestsByProject(projCurr).then(function(pullRequests) 
+						{
+							$(".big-count").html(pullRequests.length);
+							$("a").attr("href", uri)
+						}).catch(console.log.bind(console));
+                        return WidgetHelpers.WidgetStatusHelper.Success();
+                    }
+                }
+            });
+			VSS.notifyLoadSucceeded();
+		 });
+</script>
+</body>
+</html>
