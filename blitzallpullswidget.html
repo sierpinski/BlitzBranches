@@ -10,13 +10,30 @@
     <script src="sdk/scripts/VSS.SDK.js"></script>
 </head>
 <body>
-<div class="widget clickable">
-	<a href="#" target="_blank">
-    <h2 class="title">Active</h2>
-    <div class="big-count"></div>
-    <div>Pull Requests</div>
+<div class="widget clickable" style="background-color: rgb(0, 155, 204);">
+	<a href="#" target="_parent" style=" color: white !important;">
+    <h2 class="title" style=" color: white !important;">Active</h2>
+    <div class="big-count" style=" color: white !important;"></div>
+    <div style=" color: white !important;">Pull Requests</div>
 	</a>
 </div>
+<style>
+	a:link {
+		text-decoration: none;
+	}
+
+	a:visited {
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: none;
+	}
+
+	a:active {
+		text-decoration: none;
+	}
+</style>
 <script>
 	// Sets up the initial handshake with the host frame
 	 VSS.init({
@@ -35,7 +52,7 @@
 			var gitClient = VSS_Service.getCollectionClient(Git_Client.GitHttpClient);
 			var currentContext = VSS.getWebContext(); 
 			var projCurr = currentContext.project.name;
-			var uri = currentContext.host.uri + "//" + projCurr + "//_apps//hub//sierpinski.blitz-allpulls-extension.BlitzActivePulls";
+			var uri = currentContext.host.uri + "/" + projCurr + "/_apps/hub/sierpinski.blitz-allpulls-extension.BlitzActivePulls";
 			
             WidgetHelpers.IncludeWidgetStyles();
 			VSS.register("BlitzActivePullsWidget", function () {                

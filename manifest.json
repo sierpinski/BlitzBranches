@@ -1,9 +1,9 @@
 {
 	 "manifestVersion": 1,
 	 "id": "blitz-allpulls-extension",
-	 "version": "0.7.8",
+	 "version": "0.8.5",
 	 "name": "Blitz Active Pull Requests",
-	 "description": "An extension that shows all active pull requests.",
+	 "description": "An extension that shows all active pull requests across all of your project's repositories.",
 	 "publisher": "sierpinski",
 	 "icons": {
         "default": "images/blitzallpulls.png"
@@ -32,6 +32,9 @@
         },
         {
             "path": "images/ScreenCapNav.png"
+        },
+		{
+            "path": "images/ScreenCapWidget.png"
         }
     ],
 	"links": {
@@ -52,7 +55,7 @@
 			 {
 				 "id": "BlitzActivePulls",
 				 "type": "ms.vss-web.hub",
-				 "description": "Shows all active pull requests.",
+				 "description": "Shows all active pull requests across all of your project's repositories.",
 				 "targets": [
 					 "ms.vss-code-web.code-hub-group"
 				 ],
@@ -70,7 +73,7 @@
                 ],
                 "properties": {
                     "name": "Blitz Active Pull Requests Count",
-                    "description": "Show a count of all active pull requests across all repositories.",
+                    "description": "Shows a count of all active pull requests across all of your project's repositories.",
                     "catalogIconUrl:": "images/CatalogIcon.png",
                     "previewImageUrl": "images/preview.png",                            
                     "uri": "blitzallpullswidget.html",
