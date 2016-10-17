@@ -1,0 +1,59 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <!-- Custom Styles for this Extension-->
+	<link rel="stylesheet" type="text/css" href="styles/blitzallpulls.css">
+	<!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="sdk/scripts/VSS.SDK.min.js"></script>
+    <!-- AppInsights 
+    <script src="scripts/appinsightsblitz.js"></script>-->
+</head>
+<body>
+    <div class="row">
+        <h5 class="col-md-3" align="center">Branch Count: <span id="BranchCountSpan"></span></h5><h3 class="col-md-6" align="center">Non-Master Branches</h3><h5 class="col-md-3" align="center">Project: <span id="ProjectNameSpan"></span></h5>
+    </div>
+    <div class="row" name="filters">
+        <form role="form">
+            <div class="checkbox">
+                <label><input type="checkbox" value="" id="limitReviewerMe"> Show Only Branches Where I am the Author.</label>
+            </div>
+        </form>
+    </div>
+    <div class="table-responsive" id="branchTableContainer">
+        <table class="table table-hover table-striped table-condensed" id="branchTable">
+            <thead>
+                <tr>
+                    <th>
+                        Repository
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Creation Date
+                    </th>
+                    <th>
+                        Commits Ahead
+                    </th>
+                    <th>
+                        Commits Behind
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Handle Branch
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="branchTableBody"></tbody>
+        </table>
+    </div>
+    <script src="scripts/blitzallbranches.js"></script>
+</body>
+</html>
