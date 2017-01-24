@@ -1,0 +1,48 @@
+.id-holder {
+	clear: both;
+	padding: 2px;
+}
+
+img {
+	padding-right: 2px;
+	float: left;
+}
+
+h5, h3 {
+	margin: 0;
+}
+
+#branchTableContainer {
+	height: 100%;
+	overflow: scroll;
+}
+
+.approved {
+	border: 5px;
+	border-bottom-style: solid;
+	border-color: #287729;
+}
+
+.approvedwithsuggestions {
+	border: 5px;
+	border-bottom-style: dotted;
+	border-color: #287729;
+}
+
+.rejected {
+	border: 5px;
+	border-bottom-style: solid;
+	border-color: lightcoral;
+}
+
+.waitingauthor {
+	border: 5px;
+	border-bottom-style: dotted;
+	border-color: #FF8C0C;
+}
+
+#limitReviewerMe {
+	position: relative !important;
+	padding-left: 0px !important;
+	margin-left: 0px !important;
+}
