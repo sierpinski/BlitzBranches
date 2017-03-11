@@ -13,6 +13,9 @@ This is for VSTS (VSO, TFS 2015). This extension shows all of the non-master bra
 Here is an example list of branches:
 ![Screenshot of Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allbranches/0.4.8/assetbyname/Microsoft.VisualStudio.Services.Screenshots.1 "Screenshot/Active Pull Requests")
 
+##Update 0.5.6
+Improve branch name handling. (thanks Rob Pierce and tmadsen)
+
 ##Features On Release
 * Widget, showing count of non-master branches across all repositories.
 * Filter to only branches that you created.
@@ -22,7 +25,7 @@ Here is an example list of branches:
 On [my pull request app](https://marketplace.visualstudio.com/items?itemName=sierpinski.blitz-allpulls-extension) Marcus Mobley asked in a comment if I would make this app, so here it is!
 
 ##Source Code and Issue Reporting
-I use my pull request app's [GitHub repository](https://github.com/sierpinski/Blitz). Please open issues with the extension there so I can track them more easily.
+Here is the source: [GitHub repository](https://github.com/sierpinski/BlitzBranches). Please open issues with the extension there so I can track them more easily.
 
 ##Feature Ideas
 Highlight branches which can be deleted or perhaps even offer a delete option with confirmation.
