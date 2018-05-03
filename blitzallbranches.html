@@ -15,15 +15,23 @@
 </head>
 <body>
     <div class="row">
-        <h5 class="col-md-3" align="center">Branch Count: <span id="BranchCountSpan"></span></h5><h3 class="col-md-6" align="center">Non-Master Branches</h3><h5 class="col-md-3" align="center">Project: <span id="ProjectNameSpan"></span></h5>
+        <button id="toggleOptions" type="button" class="col-md-1 btn btn-info">Options</button>
+		<h5 class="col-md-2" align="center">Branch Count: <span id="BranchCountSpan"></span></h5>
+		<h3 class="col-md-6" align="center">Non-Master Branches</h3>
+		<h5 class="col-md-3" align="center">Project: <span id="ProjectNameSpan"></span></h5>
     </div>
-    <div class="row" name="filters">
-        <form role="form">
-            <div class="checkbox">
-                <label><input type="checkbox" value="" id="limitReviewerMe"> Show Only Branches Where I am the Author.</label>
-            </div>
-        </form>
-    </div>
+	<div class="row bg-info" id="filters" style="display: none;">
+		<form role="form">
+			<div class="form-group">
+				<label for="branchesExcluded">Branches To Exclude</label>
+				<select multiple class="form-control" id="branchesExcluded">
+				</select>
+			</div>
+			<div class="form-group checkbox">
+				<label><input type="checkbox" value="" id="limitReviewerMe"> Show Only Branches Where I am the Author.</label>
+			</div>
+		</form>
+	</div>
     <div class="table-responsive" id="branchTableContainer">
         <table class="table table-hover table-striped table-condensed" id="branchTable">
             <thead>

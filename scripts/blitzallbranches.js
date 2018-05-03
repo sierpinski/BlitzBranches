@@ -39,6 +39,7 @@ VSS.require(["VSS/Controls", "VSS/Controls/Grids", "VSS/Controls/Dialogs",
 						});
 						$("#" + branchId + "").addClass("noMatchUser");
 						$("#" + branchId + "").append("<td data-repid=\"" + id + "\">" + branch.name + "</td>");
+						$("#branchesExcluded").append("<option>" + branch.name + "</option>");
 						var dStr = branch.commit.author.date.toString();
 						var cDate = dStr.substring(0, 24);
 						$("#" + branchId + "").append("<td>" + cDate + "</td>");
@@ -68,5 +69,19 @@ VSS.require(["VSS/Controls", "VSS/Controls/Grids", "VSS/Controls/Dialogs",
 $(document).ready(function () {
 	$('#limitReviewerMe').change(function () {
 		$('.noMatchUser').toggle(!(this.checked));
+	});
+	$("#branchesExcluded").change(function () {
+		$(this).find("option").each(function(){
+			var hideIt = $(this).is(":selected");
+			var branchNameToToggle = $(this).text();
+			// The below is not perfect, it would find thisBranchh when trying to exclude thisBranch, for example.
+			$('tr td:contains(' + branchNameToToggle + ')').each(function(){
+				if (hideIt)	$(this).parent().hide();
+				else $(this).parent().show();
+			});
+		});
+	});
+	$("#toggleOptions").click(function(){
+		$("#filters").toggle();
 	});
 });

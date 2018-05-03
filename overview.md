@@ -2,16 +2,20 @@
 ## What is it?
 This extension puts all non-master git branches across all repositories in your project into a queue. This allows users to find lost or behind branches.
 
-## Widget
-It comes with a widget you can add to any hub screen. Here's how it looks:
-![Widget Showing Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allbranches/0.4.8/assetbyname/Microsoft.VisualStudio.Services.Screenshots.2 "Active Pull Requests Widget")
 
 ## Details
-This is for VSTS (VSO, TFS 2015). This extension shows all of the non-master branches in a project. The approver can then follow a link to see that branch on its repository's "Branches" screen.
+This is for VSTS (+TFS). This extension shows all of the non-master branches in a project. The approver can then follow a link to see that branch on its repository's "Branches" screen.
+
+## Update 0.5.7-0.5.8 Added Options
+This update comes with the feature to choose to exclude one or more branches from the list. This will be handy for excluding common branches other than master branch. Also, moves branch exclusion options under an Option button.
 
 ## Screenshot
 Here is an example list of branches:
 ![Screenshot of Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allbranches/0.4.8/assetbyname/Microsoft.VisualStudio.Services.Screenshots.1 "Screenshot/Active Pull Requests")
+
+## Widget
+![Widget Showing Active Pull Requests](https://sierpinski.gallery.vsassets.io/_apis/public/gallery/publisher/sierpinski/extension/blitz-allbranches/0.4.8/assetbyname/Microsoft.VisualStudio.Services.Screenshots.2 "Active Pull Requests Widget")
+Add this widget to any hub screen.
 
 ## Update 0.5.6
 Improve branch name handling. (thanks Rob Pierce and tmadsen)

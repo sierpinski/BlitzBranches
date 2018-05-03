@@ -41,8 +41,14 @@ h5, h3 {
 	border-color: #FF8C0C;
 }
 
-#limitReviewerMe {
-	position: relative !important;
-	padding-left: 0px !important;
-	margin-left: 0px !important;
+#filters {
+	margin: 10px !important;
+}
+
+#toggleOptions {
+	padding: 10px;
+}
+
+form {
+	padding: 10px;
 }
