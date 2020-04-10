@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "blitz-allbranches",
-  "version": "0.5.8",
+  "version": "0.5.9",
   "name": "Branch Blitz",
   "description": "Shows all non-master branches across all repositories in your Project.",
   "publisher": "sierpinski",
@@ -36,7 +36,13 @@
   ],
   "links": {
     "home": {
-      "uri": "https://github.com/sierpinski/Blitz"
+      "uri": "https://github.com/sierpinski/BlitzBranches"
+    },
+    "support": {
+      "url": "https://github.com/sierpinski/BlitzBranches"
+    },
+    "privacypolicy": {
+      "url": "https://creativecommons.org/privacy/"
     }
   },
   "branding": {
@@ -59,7 +65,8 @@
       "properties": {
         "name": "Non-Master Branches",
         "order": 99,
-        "uri": "blitzallbranches.html"
+        "uri": "blitzallbranches.html",
+        "icon": "images/babmenuicon.png"
       }
     },
     {
@@ -114,6 +121,10 @@
     },
     {
       "path": "images/preview.png",
+      "addressable": true
+    },
+    {
+      "path": "images/babmenuicon.png",
       "addressable": true
     }
   ]
