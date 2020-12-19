@@ -1,13 +1,13 @@
 # Blitz
 ## What is it?
-This extension puts all non-master git branches across all repositories in your project into a queue. This allows users to find lost or behind branches.
+This extension puts all non-main git branches across all repositories in your project into a queue. This allows users to find lost or behind branches.
 
 
 ## Details
-This is for VSTS (+TFS). This extension shows all of the non-master branches in a project. The approver can then follow a link to see that branch on its repository's "Branches" screen.
+This is for VSTS (+TFS). This extension shows all of the non-main branches in a project. The approver can then follow a link to see that branch on its repository's "Branches" screen.
 
 ## Update 0.5.7-0.5.8 Added Options
-This update comes with the feature to choose to exclude one or more branches from the list. This will be handy for excluding common branches other than master branch. Also, moves branch exclusion options under an Option button.
+This update comes with the feature to choose to exclude one or more branches from the list. This will be handy for excluding common branches other than main branch. Also, moves branch exclusion options under an Option button.
 
 ## Screenshot
 Here is an example list of branches:
@@ -21,7 +21,7 @@ Add this widget to any hub screen.
 Improve branch name handling. (thanks Rob Pierce and tmadsen)
 
 ## Features On Release
-* Widget, showing count of non-master branches across all repositories.
+* Widget, showing count of non-main branches across all repositories.
 * Filter to only branches that you created.
 * Shows how many commits the branch is ahead and behind.
 
