@@ -84,4 +84,14 @@ $(document).ready(function () {
 	$("#toggleOptions").click(function(){
 		$("#filters").toggle();
 	});
+	$("#filterBranchesByText").onkeyup(function(){
+		var filterText = $("#filterBranchesByText").value.toUpperCase();
+		if (filterText == null || filterText.length <= 0) return;
+		$('tr td:contains(' + filterText + ')').each(function(){
+			$(this).parent().show();
+		});
+		$('tr td:not(:contains(' + filterText + '))').each(function(){
+			$(this).parent().hide();
+		});
+	});
 });
