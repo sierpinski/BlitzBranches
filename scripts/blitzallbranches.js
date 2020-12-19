@@ -85,13 +85,9 @@ $(document).ready(function () {
 		$("#filters").toggle();
 	});
 	$("#filterBranchesByText").keyup(function(){
-		var filterText = $("#filterBranchesByText").value.toUpperCase();
+		var filterText = $("#filterBranchesByText").val();
 		if (filterText == null || filterText.length <= 0) return;
-		$('tr td:contains(' + filterText + ')').each(function(){
-			$(this).parent().show();
-		});
-		$('tr td:not(:contains(' + filterText + '))').each(function(){
-			$(this).parent().hide();
-		});
+		$('tr:has(td:not(:contains(' + filterText + ')))').hide();
+		$('tr:has(td:contains(' + filterText + '))').show();
 	});
 });

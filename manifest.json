@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "blitz-allbranches",
-  "version": "0.5.13",
+  "version": "0.5.15",
   "name": "Branch Blitz",
   "description": "Shows all non-main branches across all repositories in your Project.",
   "publisher": "sierpinski",
