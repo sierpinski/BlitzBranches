@@ -38,7 +38,7 @@ VSS.require(["VSS/Controls", "VSS/Controls/Grids", "VSS/Controls/Dialogs",
 							$("#" + branchId + "").find("[data-repid='" +id + "']").before("<td>" + repo.name + "</td>");
 						});
 						$("#" + branchId + "").addClass("noMatchUser");
-						$("#" + branchId + "").append("<td data-repid=\"" + id + "\">" + branch.name + "</td>");
+						$("#" + branchId + "").append("<td name=\"branchtd\" data-repid=\"" + id + "\">" + branch.name + "</td>");
 						$("#branchesExcluded").append("<option>" + branch.name + "</option>");
 						var dStr = branch.commit.author.date.toString();
 						var cDate = dStr.substring(0, 24);
@@ -70,26 +70,39 @@ $(document).ready(function () {
 	$('#limitReviewerMe').change(function () {
 		$('.noMatchUser').toggle(!(this.checked));
 	});
-	$("#branchesExcluded").change(function () {
-		$(this).find("option").each(function(){
-			var hideIt = $(this).is(":selected");
-			var branchNameToToggle = $(this).text();
-			// The below is not perfect, it would find thisBranchh when trying to exclude thisBranch, for example.
-			$('tr td:contains(' + branchNameToToggle + ')').each(function(){
-				if (hideIt)	$(this).parent().hide();
-				else $(this).parent().show();
-			});
-		});
-	});
 	$("#toggleOptions").click(function(){
 		$("#filters").toggle();
 	});
-	$("#filterBranchesByText").keyup(function(){
-		var filterText = $("#filterBranchesByText").val();
-		if (filterText == null || filterText.length <= 0) return;
-		$('tr:has(td:not(:contains(' + filterText + ')))').hide();
-		$('tr:has(td:contains(' + filterText + '))').show();
+	$("#branchesExcluded").change(function () {
+		filterBranches();
 	});
+	$("#filterBranchesByText").keyup(function(){
+		filterBranches();
+	});
+	$("#excludeBranchesByText").keyup(function(){
+		filterBranches();
+	});
+	function filterBranches() {
+		$('tr').show();
+
+		// Exclude Text
+		var excludeText = $("#excludeBranchesByText").val();
+		var excludeTextArray = excludeText.split(',');
+		excludeTextArray.forEach(function(item, index) {
+			if (item != null && item.length > 0) $('tr:has(td[name="branchtd"]:contains(' + item + '))').hide();
+		});
+
+		// Exclude selected branches
+		$("#branchesExcluded").find("option").each(function(){
+			var hideIt = $(this).is(":selected") == true;
+			var branchNameToToggle = $(this).text();
+			if (hideIt) $('tr:has(td[name="branchtd"]:contains(' + branchNameToToggle + '))').hide();
+		});
+
+		// Show Only Text
+		var showOnlyText = $("#filterBranchesByText").val();
+		if (showOnlyText != null && showOnlyText.length > 0) $('tr:has(td[name="branchtd"]:not(:contains(' + showOnlyText + ')))').hide();
+	}
 	$('th').click(function(){
 		var table = $(this).parents('table').eq(0)
 		var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))

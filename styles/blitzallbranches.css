@@ -41,6 +41,10 @@ h5, h3 {
 	border-color: #FF8C0C;
 }
 
+#toggleOptions {
+	padding-left: 10px;
+}
+
 #filters {
 	margin: 10px !important;
 }
