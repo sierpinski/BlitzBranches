@@ -31,29 +31,29 @@
 				<label><input type="checkbox" value="" id="limitReviewerMe"> Show Only Branches Where I am the Author.</label>
 			</div>
 		</form>
-	</div>
+    </div>
     <input type="text" id="filterBranchesByText" placeholder="Search for branches..." title="Type in all or part of a branch name">
     <div class="table-responsive" id="branchTableContainer">
         <table class="table table-hover table-striped table-condensed" id="branchTable">
             <thead>
                 <tr>
-                    <th>
-                        Repository
+                    <th onclick="sortTable(0)">
+                        Repository&uarr;
+                    </th>
+                    <th onclick="sortTable(1)">
+                        Title&uarr;
                     </th>
                     <th>
-                        Title
+                        Creation Date&uarr;
                     </th>
                     <th>
-                        Creation Date
+                        Commits Ahead&uarr;
                     </th>
                     <th>
-                        Commits Ahead
+                        Commits Behind&uarr;
                     </th>
-                    <th>
-                        Commits Behind
-                    </th>
-                    <th>
-                        Author
+                    <th onclick="sortTable(5)">
+                        Author&uarr;
                     </th>
                     <th>
                         To Branch
